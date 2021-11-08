@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>什么是链表 | 前端算法</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="https://vuejs.org/images/logo.png">
+    <meta name="description" content="前端算法">
+    
+    <link rel="preload" href="/FE_algorithms/assets/css/0.styles.75bd0095.css" as="style"><link rel="preload" href="/FE_algorithms/assets/js/app.5a1a6f37.js" as="script"><link rel="preload" href="/FE_algorithms/assets/js/2.a42cd6f0.js" as="script"><link rel="preload" href="/FE_algorithms/assets/js/6.db061b35.js" as="script"><link rel="prefetch" href="/FE_algorithms/assets/js/3.06ac94a5.js"><link rel="prefetch" href="/FE_algorithms/assets/js/4.7058a68d.js"><link rel="prefetch" href="/FE_algorithms/assets/js/5.8df3fc8a.js"><link rel="prefetch" href="/FE_algorithms/assets/js/7.bce07a3b.js"><link rel="prefetch" href="/FE_algorithms/assets/js/8.da5339ea.js"><link rel="prefetch" href="/FE_algorithms/assets/js/9.0aff7ef3.js">
+    <link rel="stylesheet" href="/FE_algorithms/assets/css/0.styles.75bd0095.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/FE_algorithms/" class="home-link router-link-active"><img src="https://vuejs.org/images/logo.png" alt="前端算法" class="logo"> <span class="site-name can-hide">前端算法</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/FE_algorithms/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/FE_algorithms/guide/" class="nav-link">
+  Guide
+</a></div><div class="nav-item"><a href="https://github.com/leiyangs" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/FE_algorithms/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/FE_algorithms/guide/" class="nav-link">
+  Guide
+</a></div><div class="nav-item"><a href="https://github.com/leiyangs" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>链表</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/FE_algorithms/linkedList/" aria-current="page" class="active sidebar-link">什么是链表</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/FE_algorithms/linkedList/#_1-如何成为链状结构" class="sidebar-link">1. 如何成为链状结构</a></li><li class="sidebar-sub-header"><a href="/FE_algorithms/linkedList/#_2-双链表" class="sidebar-link">2. 双链表</a></li><li class="sidebar-sub-header"><a href="/FE_algorithms/linkedList/#_3-链表的实现方式" class="sidebar-link">3. 链表的实现方式</a></li><li class="sidebar-sub-header"><a href="/FE_algorithms/linkedList/#_4-应用场景" class="sidebar-link">4. 应用场景</a></li><li class="sidebar-sub-header"><a href="/FE_algorithms/linkedList/#_5-力扣" class="sidebar-link">5. 力扣</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/FE_algorithms/linkedList/#环状链表" class="sidebar-link">环状链表</a></li></ul></li></ul></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="什么是链表"><a href="#什么是链表" class="header-anchor">#</a> 什么是链表</h1> <ul><li>若干个节点串成一串，这样的一个数据结构</li> <li>链表中每个节点至少包含两个部分，数据域 和 指针域</li> <li>链表的节点，通过指针域的值，形成一个线性结构</li> <li>查找 O(n)，插入和删除 O(1)</li> <li>不是和快速的定位数据，适合动态的插入和删除</li></ul> <p><img src="/FE_algorithms/assets/img/linkedlist.d0162ed3.png" alt="链表结构"></p> <h2 id="_1-如何成为链状结构"><a href="#_1-如何成为链状结构" class="header-anchor">#</a> 1. 如何成为链状结构</h2> <ul><li><p>每个阶段都包含两个部分</p> <ul><li>数据域：用于存储元素本身的数据信息，他不局限于一个成员数据，也可能是多个成员数据</li> <li>指针域：用于存储直接后继的节点信息</li></ul></li> <li><p>通过指针域的值形成了一个线性结构</p> <ul><li>实现方式：地址、下标、引用</li></ul></li> <li><p>不适合快速的定位数据，适合动态的插入和删除</p></li></ul> <h2 id="_2-双链表"><a href="#_2-双链表" class="header-anchor">#</a> 2. 双链表</h2> <ul><li>有两个指针域，不仅可以向前还可以向后查找</li></ul> <h2 id="_3-链表的实现方式"><a href="#_3-链表的实现方式" class="header-anchor">#</a> 3. 链表的实现方式</h2> <ul><li>节点+指针</li></ul> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">class</span> <span class="token class-name">Node</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">val<span class="token punctuation">,</span> next <span class="token operator">=</span> <span class="token keyword">null</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>val <span class="token operator">=</span> val<span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>next <span class="token operator">=</span> next<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">ListNode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> head <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 第一个节点</span>
+  head<span class="token punctuation">.</span>next <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 第二个节点</span>
+  head<span class="token punctuation">.</span>next<span class="token punctuation">.</span>next <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 第三个节点</span>
+  head<span class="token punctuation">.</span>next<span class="token punctuation">.</span>next<span class="token punctuation">.</span>next <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// ...</span>
+
+  <span class="token keyword">let</span> p <span class="token operator">=</span> head<span class="token punctuation">,</span>
+    ret <span class="token operator">=</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">;</span>
+  <span class="token keyword">while</span> <span class="token punctuation">(</span>p<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    ret <span class="token operator">+=</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>p<span class="token punctuation">.</span>val<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> =&gt; </span><span class="token template-punctuation string">`</span></span><span class="token punctuation">;</span>
+    p <span class="token operator">=</span> p<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  ret <span class="token operator">+=</span> <span class="token string">&quot;null&quot;</span><span class="token punctuation">;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>ret<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">ListNode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><ul><li>双数组</li></ul> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token comment">// data 数组存储数据</span>
+<span class="token comment">// next 数组存储指针，存储下一个数据的数组下标</span>
+<span class="token keyword">function</span> <span class="token function">ListNode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> data <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> next <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// 这里用index作为连接，index后，就相当于当前的next</span>
+  <span class="token comment">// 在index下标后添加一个p节点，节点的值是val</span>
+  <span class="token keyword">function</span> <span class="token function">addNode</span><span class="token punctuation">(</span><span class="token parameter">index<span class="token punctuation">,</span> p<span class="token punctuation">,</span> val</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// index节点指针指向p，p指向之前index的下一个节点</span>
+    next<span class="token punctuation">[</span>p<span class="token punctuation">]</span> <span class="token operator">=</span> next<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 这里p指向index的下一个节点，也就是q（可以理解为存放index的下一个节点）</span>
+    next<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">=</span> p<span class="token punctuation">;</span> <span class="token comment">// 这里把index指向新的p节点</span>
+    data<span class="token punctuation">[</span>p<span class="token punctuation">]</span> <span class="token operator">=</span> val<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 假设节点从3开始，值为a</span>
+  <span class="token keyword">let</span> head <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+  data<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">&quot;a&quot;</span><span class="token punctuation">;</span>
+
+  <span class="token function">addNode</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token string">&quot;b&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 3后面添加5节点，值是b</span>
+  <span class="token function">addNode</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token string">&quot;c&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 5后面添加7节点，值是c</span>
+  <span class="token function">addNode</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">&quot;d&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 7后面添加2节点，值是d</span>
+  <span class="token function">addNode</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">&quot;e&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// ...</span>
+  <span class="token function">addNode</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token string">&quot;f&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// ...</span>
+  <span class="token function">addNode</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token string">&quot;g&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// ...</span>
+
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">let</span> p <span class="token operator">=</span> head<span class="token punctuation">,</span>
+    ret <span class="token operator">=</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">;</span>
+  <span class="token keyword">while</span> <span class="token punctuation">(</span>p<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    ret <span class="token operator">+=</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>data<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> =&gt; </span><span class="token template-punctuation string">`</span></span><span class="token punctuation">;</span>
+    p <span class="token operator">=</span> next<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  ret <span class="token operator">+=</span> <span class="token string">&quot;null&quot;</span><span class="token punctuation">;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>ret<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> next<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// '3 =&gt; 5 =&gt; 7 =&gt; 4 =&gt; 2 =&gt; 6 =&gt; 1 =&gt; null'</span>
+<span class="token comment">// 'a =&gt; b =&gt; c =&gt; f =&gt; d =&gt; g =&gt; e =&gt; null'</span>
+</code></pre></div><p>手动画图
+<img src="/FE_algorithms/assets/img/listnode.9efbb6c1.jpg" alt="listnode"></p> <h2 id="_4-应用场景"><a href="#_4-应用场景" class="header-anchor">#</a> 4. 应用场景</h2> <ul><li>操作系统内的动态内存分配</li> <li>LRU 缓存淘汰算法
+<ul><li>缓存：高速设备之于低速设备的一种称呼</li> <li>缓存维护
+<ul><li>链表结构：链表 + hash</li> <li>放入新数据时，淘汰旧数据</li></ul></li></ul></li> <li>JS Map 底层</li></ul> <h2 id="_5-力扣"><a href="#_5-力扣" class="header-anchor">#</a> 5. 力扣</h2> <h3 id="环状链表"><a href="#环状链表" class="header-anchor">#</a> 环状链表</h3> <ul><li>141 哈希表</li></ul> <div class="language-javascript extra-class"><pre class="language-javascript"><code>
+</code></pre></div><ul><li>142 快慢指针</li></ul> <div class="language-javascript extra-class"><pre class="language-javascript"><code>
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/FE_algorithms/assets/js/app.5a1a6f37.js" defer></script><script src="/FE_algorithms/assets/js/2.a42cd6f0.js" defer></script><script src="/FE_algorithms/assets/js/6.db061b35.js" defer></script>
+  </body>
+</html>
