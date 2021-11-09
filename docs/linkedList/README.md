@@ -120,16 +120,175 @@ function ListNode() {
 
 ## 5. 力扣
 
-### 环状链表
+### 1)环状链表
 
-- 141 哈希表
+- 141.环形链表
+
+给定一个链表，判断链表中是否有环。
+
+如果链表中有某个节点，可以通过连续跟踪 next 指针再次到达，则链表中存在环。 为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。注意：pos 不作为参数进行传递，仅仅是为了标识链表的实际情况。
+
+如果链表中存在环，则返回 true 。 否则，返回 false 。
+
+> 解题思路：快慢指针,萌宝啊: 直接比较的节点，就是比较引用地址
 
 ```javascript
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
 
+// 设置一快一慢两个指针
+/**
+ * @param {ListNode} head
+ * @return {boolean}
+ */
+var hasCycle = function (head) {
+  if (!head) return false;
+  let slow = head;
+  let fast = head.next;
+  while (fast && fast.next && slow) {
+    slow = slow.next;
+    fast = fast.next.next;
+    if (slow === fast) {
+      return true;
+    }
+  }
+  return false;
+};
 ```
 
-- 142 快慢指针
+- 142.环形链表 II
+
+给定一个链表，返回链表开始入环的第一个节点。  如果链表无环，则返回  null。
+
+为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。注意，pos 仅仅是用于标识环的情况，并不会作为参数传递到函数中。
+
+说明：不允许修改给定的链表。
+
+> 解题思路：快慢指针
 
 ```javascript
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
 
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var detectCycle = function (head) {
+  if (!head || !head.next) return null;
+
+  // 刚开始先走一步
+  let slow = head.next;
+  let fast = head.next.next;
+
+  // 判断是否有环
+  while (slow !== fast && fast && fast.next) {
+    slow = slow.next;
+    fast = fast.next.next;
+  }
+  if (slow !== fast) return null;
+
+  // 走到这里说明肯定有环
+  while (slow !== fast) {
+    slow = slow.next;
+    fast = fast.next;
+  }
+
+  return slow;
+};
+```
+
+![环形链表 II](../assets/images/listnode2.jpg)
+
+### 2)反转链表
+
+- 206.反转链表
+
+给你单链表的头节点 head ，请你反转链表，并返回反转后的链表。
+
+> 解题思路：定义三个指针，next 存储当前的 next 指针
+
+```javascript
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var reverseList = function (head) {
+  if (!head || !head.next) return head;
+
+  // 给1元素前定义一个null，cur节点指向1，next指向2
+  let pre = null;
+  let cur = head;
+
+  while (cur) {
+    // 存储当前元素的下一个指向
+    let next = cur.next;
+    // 使当前节点指向上一个，也就是我们定义的null
+    cur.next = pre;
+
+    pre = cur;
+    cur = next;
+  }
+  return pre;
+};
+```
+
+![反转链表 II](../assets/images/reversal.jpg)
+
+- 92.反转链表 II
+
+给你单链表的头指针 head 和两个整数  left 和 right ，其中  left <= right 。请你反转从位置 left 到位置 right 的链表节点，返回 反转后的链表 。
+
+> 解题思路：使用「206. 反转链表」的解法，反转 left 到 right 部分以后，再拼接起来。我们还需要记录 left 的前一个节点，和 right 的后一个节点
+
+### 3)删除排序链表中的重复元素
+
+- 83.删除排序链表中的重复元素
+
+  - 存在一个按升序排列的链表，给你这个链表的头节点 head ，请你删除所有重复的元素，使每个元素 只出现一次 。
+
+  - 返回同样按升序排列的结果链表。
+
+> 解题思路：一直循环，如果当前的值和下一个值相同，那么就指向下下个值，一直找到不一样的为止。地址相同，但是节点的 val 可能相同，比较 val。
+
+```javascript
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var deleteDuplicates = function (head) {
+  let current = head;
+  while (current && current.next) {
+    if (current.val === current.next.val) {
+      current.next = current.next.next;
+    } else {
+      current = current.next;
+    }
+  }
+  return head;
+};
 ```
