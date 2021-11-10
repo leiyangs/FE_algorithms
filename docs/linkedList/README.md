@@ -122,7 +122,7 @@ function ListNode() {
 
 ### 1)环状链表
 
-- 141.环形链表
+#### 141.环形链表
 
 给定一个链表，判断链表中是否有环。
 
@@ -130,7 +130,9 @@ function ListNode() {
 
 如果链表中存在环，则返回 true 。 否则，返回 false 。
 
-> 解题思路：快慢指针,萌宝啊: 直接比较的节点，就是比较引用地址
+---
+
+**解题思路：快慢指针, 直接比较的节点，就是比较引用地址**
 
 ```javascript
 /**
@@ -161,7 +163,7 @@ var hasCycle = function (head) {
 };
 ```
 
-- 142.环形链表 II
+#### 142.环形链表 II
 
 给定一个链表，返回链表开始入环的第一个节点。  如果链表无环，则返回  null。
 
@@ -169,7 +171,7 @@ var hasCycle = function (head) {
 
 说明：不允许修改给定的链表。
 
-> 解题思路：快慢指针
+**解题思路：快慢指针**
 
 ```javascript
 /**
@@ -212,11 +214,11 @@ var detectCycle = function (head) {
 
 ### 2)反转链表
 
-- 206.反转链表
+#### 206.反转链表
 
 给你单链表的头节点 head ，请你反转链表，并返回反转后的链表。
 
-> 解题思路：定义三个指针，next 存储当前的 next 指针
+**解题思路：定义三个指针，next 存储当前的 next 指针**
 
 ```javascript
 /**
@@ -226,6 +228,7 @@ var detectCycle = function (head) {
  *     this.next = (next===undefined ? null : next)
  * }
  */
+// 指针方式
 /**
  * @param {ListNode} head
  * @return {ListNode}
@@ -248,25 +251,98 @@ var reverseList = function (head) {
   }
   return pre;
 };
+
+// 递归方式
+var reverseList = function (head) {
+  if (!head || !head.next) return head;
+
+  let pre = head;
+  let cur = head.next;
+
+  // 返回反转后的链表
+  let p = reverseList(head.next);
+
+  // 最里层的递归先执行，pre=4 next=5, 4指向null 5指向4。递归依次执行，层层指向
+  pre.next = null;
+  cur.next = pre;
+
+  return p;
+};
 ```
 
-![反转链表 II](../assets/images/reversal.jpg)
+![反转链表](../assets/images/reverse1.jpg)
 
-- 92.反转链表 II
+#### 92.反转链表 II
 
 给你单链表的头指针 head 和两个整数  left 和 right ，其中  left <= right 。请你反转从位置 left 到位置 right 的链表节点，返回 反转后的链表 。
 
-> 解题思路：使用「206. 反转链表」的解法，反转 left 到 right 部分以后，再拼接起来。我们还需要记录 left 的前一个节点，和 right 的后一个节点
+**解题思路：使用「206. 反转链表」的解法，反转 left 到 right 部分以后，再拼接起来。我们还需要记录 left 的前一个节点，和 right 的后一个节点.**
+
+第 1 步：先将待反转的区域反转；
+
+第 2 步：把 pre 的 next 指针指向反转以后的链表头节点，把反转以后的链表的尾节点的 next 指针指向 succ。
+
+```javascript
+var reverseBetween = function (head, left, right) {
+  // 因为头节点有可能发生变化，使用虚拟头节点可以避免复杂的分类讨论 按我的理解应该是方便用index模拟指针
+  const dummyNode = new ListNode(-1);
+  dummyNode.next = head;
+
+  let pre = dummyNode;
+  // 第 1 步：从虚拟头节点走 left - 1 步，来到 left 节点的前一个节点
+  // 建议写在 for 循环里，语义清晰
+  for (let i = 0; i < left - 1; i++) {
+    pre = pre.next;
+  }
+
+  // 第 2 步：从 pre 再走 right - left + 1 步，来到 right 节点
+  let rightNode = pre;
+  for (let i = 0; i < right - left + 1; i++) {
+    rightNode = rightNode.next;
+  }
+
+  // 第 3 步：切断出一个子链表（截取链表）
+  let leftNode = pre.next;
+  let curr = rightNode.next;
+
+  // 注意：切断链接
+  pre.next = null;
+  rightNode.next = null;
+
+  // 第 4 步：同第 206 题，反转链表的子区间
+  reverseList(leftNode);
+
+  // 第 5 步：接回到原来的链表中 1->4  2->5
+  pre.next = rightNode; //
+  leftNode.next = curr;
+  return dummyNode.next;
+};
+
+const reverseList = (head) => {
+  if (!head || !head.next) return head;
+  let pre = null;
+  let cur = head;
+
+  while (cur) {
+    const next = cur.next;
+    cur.next = pre;
+    pre = cur;
+    cur = next;
+  }
+};
+```
+
+![反转链表 II](../assets/images/reverse2.png)
 
 ### 3)删除排序链表中的重复元素
 
-- 83.删除排序链表中的重复元素
+#### 83.删除排序链表中的重复元素
 
-  - 存在一个按升序排列的链表，给你这个链表的头节点 head ，请你删除所有重复的元素，使每个元素 只出现一次 。
+- 存在一个按升序排列的链表，给你这个链表的头节点 head ，请你删除所有重复的元素，使每个元素 只出现一次 。
 
-  - 返回同样按升序排列的结果链表。
+- 返回同样按升序排列的结果链表。
 
-> 解题思路：一直循环，如果当前的值和下一个值相同，那么就指向下下个值，一直找到不一样的为止。地址相同，但是节点的 val 可能相同，比较 val。
+**解题思路：一直循环，如果当前的值和下一个值相同，那么就指向下下个值，一直找到不一样的为止。地址相同，但是节点的 val 可能相同，比较 val。**
 
 ```javascript
 /**
@@ -291,4 +367,85 @@ var deleteDuplicates = function (head) {
   }
   return head;
 };
+```
+
+### 4) 旋转链表
+
+#### 61. 旋转链表
+
+给你一个链表的头节点 head ，旋转链表，将链表每个节点向右移动 k 个位置。
+
+**解题思路：记给定链表的长度为 nn，注意到当向右移动的次数 k≥n 时，我们仅需要向右移动 k mod n 次即可。因为每 n 次移动都会让链表变为原状。这样我们可以知道，新链表的最后一个节点为原链表的第 `(n - 1) - (k mod n)` 个节点（从 0 开始计数）。**
+
+**这样，我们可以先将给定的链表连接成环，然后将指定位置断开。**
+
+**具体代码中，我们首先计算出链表的长度 n，并找到该链表的末尾节点，将其与头节点相连。这样就得到了闭合为环的链表。然后我们找到新链表的最后一个节点（即原链表的第 `(n - 1) - (k mod n)` 个节点），将当前闭合为环的链表断开，即可得到我们所需要的结果。**
+
+**特别地，当链表长度不大于 1，或者 k 为 n 的倍数时，新链表将与原链表相同，我们无需进行任何处理。**
+
+```javascript
+var rotateRight = function (head, k) {
+  if (!head || !head.next || k === 0) return head;
+
+  // 记链的长度
+  let n = 1;
+  let cur = head;
+  while (cur.next) {
+    cur = cur.next;
+    n++;
+  }
+
+  // 如果k是链长的倍数，如果k取模为0，也就是刚好k是链长度的倍数，那么直接反回head
+  let add = n - (k % n);
+  if (add === n) {
+    return head;
+  }
+
+  // 形成环，依次改变指针
+  cur.next = head;
+  while (add) {
+    cur = cur.next;
+    add--;
+  }
+
+  // 截断末尾
+  const ret = cur.next;
+  cur.next = null;
+  return ret;
+};
+```
+
+### 5)两两交换链表中的节点
+
+#### 24. 两两交换链表中的节点
+
+给定一个链表，两两交换其中相邻的节点，并返回交换后的链表。
+
+你不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。
+
+**解题思路：1. 创建哑结点 `dummyHead`，令 `dummyHead.next = head`。令 `temp` 表示当前到达的节点，初始时 `temp = dummyHead`。每次需要交换 `temp` 后面的两个节点。如果 `temp` 的后面没有节点或者只有一个节点，则没有更多的节点需要交换，因此结束交换。否则，获得 `temp` 后面的两个节点 `node1` 和 `node2`，通过更新节点的指针关系实现两两交换节点。具体而言，交换之前的节点关系是 `temp -> node1 -> node2`，交换之后的节点关系要变成 `temp -> node2 -> node1`，因此需要进行如下操作。**
+
+**2.可以通过递归的方式实现两两交换链表中的节点。递归的终止条件是链表中没有节点，或者链表中只有一个节点，此时无法进行交换。如果链表中至少有两个节点，则在两两交换链表中的节点之后，原始链表的头节点变成新的链表的第二个节点，原始链表的第二个节点变成新的链表的头节点。链表中的其余节点的两两交换可以递归地实现。在对链表中的其余节点递归地两两交换之后，更新节点之间的指针关系，即可完成整个链表的两两交换。用 `head` 表示原始链表的头节点，新的链表的第二个节点，用 `newHead` 表示新的链表的头节点，原始链表的第二个节点，则原始链表中的其余节点的头节点是 `newHead.next`。令 `head.next = swapPairs(newHead.next)`，表示将其余节点进行两两交换，交换后的新的头节点为 `head` 的下一个节点。然后令 `newHead.next = head`，即完成了所有节点的交换。最后返回新的链表的头节点 newHead。**
+
+```javascript
+// 哑节点方式
+var swapPairs = function (head) {
+  if (!head || !head.next) return head;
+
+  const dH = new ListNode(0);
+  dH.next = head;
+  let temp = dH;
+  while (temp.next && temp.next.next) {
+    const node1 = temp.next;
+    const node2 = temp.next.next;
+    temp.next = node2;
+    node1.next = node2.next;
+    node2.next = node1;
+    temp = node1;
+  }
+
+  return dH.next;
+};
+
+// 递归方式暂没理解
 ```
