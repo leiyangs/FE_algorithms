@@ -334,7 +334,7 @@ const reverseList = (head) => {
 
 ![反转链表 II](../assets/images/reverse2.png)
 
-### 3)删除排序链表中的重复元素
+### 3)删除元素
 
 #### 83.删除排序链表中的重复元素
 
@@ -366,6 +366,56 @@ var deleteDuplicates = function (head) {
     }
   }
   return head;
+};
+```
+
+#### 19. 删除链表的倒数第 N 个结点
+
+给你一个链表，删除链表的倒数第 n 个结点，并且返回链表的头结点。
+
+在对链表进行操作时，一种常用的技巧是添加一个哑节点（dummy node），它的 next 指针指向链表的头节点。这样一来，我们就不需要对头节点进行特殊的判断了。
+
+例如，在本题中，如果我们要删除节点 y，我们需要知道节点 y 的前驱节点 x，并将 x 的指针指向 y 的后继节点。但由于头节点不存在前驱节点，因此我们需要在删除头节点时进行特殊判断。但如果我们添加了哑节点，那么头节点的前驱节点就是哑节点本身，此时我们就只需要考虑通用的情况即可。
+
+特别地，在某些语言中，由于需要自行对内存进行管理。因此在实际的面试中，对于「是否需要释放被删除节点对应的空间」这一问题，我们需要和面试官进行积极的沟通以达成一致。下面的代码中默认不释放空间。这里 js 在没有指针的情况下，会自动释放空间。
+
+**解题思路：一种容易想到的方法是，我们首先从头节点开始对链表进行一次遍历，得到链表的长度 L。随后我们再从头节点开始对链表进行一次遍历，当遍历到第 L-n+1 个节点时，它就是我们需要删除的节点。**
+
+```javascript
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} n
+ * @return {ListNode}
+ */
+var removeNthFromEnd = function (head, n) {
+  if (!head || !n) return head;
+
+  const dummyNode = new ListNode(0);
+  dummyNode.next = head;
+
+  let len = 0;
+  let cur = head;
+  while (cur) {
+    cur = cur.next;
+    len++;
+  }
+
+  console.log(len);
+
+  // len-n+1是要删除的元素
+  cur = dummyNode;
+  for (let i = 0; i < len - n; i++) {
+    cur = cur.next;
+  }
+  cur.next = cur.next.next;
+  return dummyNode.next;
 };
 ```
 
