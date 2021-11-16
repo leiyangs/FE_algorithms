@@ -30,6 +30,11 @@ module.exports = {
         collapsable: true,
         children: ["/linkedList/"]
       },
+      {
+        title: '队列',
+        collapsable: true,
+        children: ["/queue/"]
+      }
       // {
       //   title: 'Nginx',
       //   children: [
