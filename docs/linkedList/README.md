@@ -480,6 +480,7 @@ var rotateRight = function (head, k) {
   }
 
   // 如果k是链长的倍数，如果k取模为0，也就是刚好k是链长度的倍数，那么直接反回head
+  // add的意义：链表只能从左往右走，不能从右往左走，而假如从右往左走k，当前的元素就正好是新链表的head，所以只能转一圈走到新head位置，也就是链表长度-实际k的长度，就是要走几步，就可以找到head
   let add = n - (k % n);
   if (add === n) {
     return head;
@@ -532,4 +533,55 @@ var swapPairs = function (head) {
 };
 
 // 递归方式暂没理解
+```
+
+### 6)快乐数
+
+- 编写一个算法来判断一个数 n 是不是快乐数。
+
+- 「快乐数」定义为：
+
+  - 对于一个正整数，每一次将该数替换为它每个位置上的数字的平方和。
+  - 然后重复这个过程直到这个数变为 1，也可能是 无限循环 但始终变不到 1。
+  - 如果 可以变为 1，那么这个数就是快乐数。
+
+- 如果 n 是快乐数就返回 true ；不是，则返回 false 。
+
+**解题思路：如果不是快乐数，超过最大数字会一直循环出现之前出现过的数字，所以判断是否有环即可**
+
+```javascript
+/*
+ * @lc app=leetcode.cn id=202 lang=javascript
+ *
+ * [202] 快乐数
+ */
+
+// @lc code=start
+/**
+ * @param {number} n
+ * @return {boolean}
+ */
+// 如果不是快乐数，超过最大值会一直循环出现之前出现过的数字，所以判断是否有环即可
+var isHappy = function (n) {
+  let pre = n,
+    curr = getNext(n);
+  while (curr !== 1) {
+    pre = getNext(pre);
+    curr = getNext(getNext(curr));
+    if (curr === pre) {
+      return false;
+    }
+  }
+  return true;
+};
+
+// 获取n的下一个数字
+function getNext(num) {
+  let result = 0;
+  while (num) {
+    result += (num % 10) * (num % 10); // num%10=num的个位数字 33%10=3
+    num = Math.floor(num / 10); // 获取num个位前面的数字
+  }
+  return result;
+}
 ```
