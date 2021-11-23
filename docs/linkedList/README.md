@@ -629,6 +629,7 @@ var partition = function (head, x) {
     head = head.next;
   }
 
+  // 大的链表中最后一个还是指向后面的元素(小于x的元素)，会成环，所以要切断
   large.next = null;
   small.next = largeHead.next;
   return smallHead.next;
