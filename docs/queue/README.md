@@ -171,7 +171,7 @@ for (let i = 0; i < keyNames.length; i++) {
 
 ### 1)循环链表
 
-#### 622.设计循环队列
+#### 622. 设计循环队列
 
 ```javascript
 /**
@@ -192,7 +192,8 @@ MyCircularQueue.prototype.enQueue = function (value) {
   if (this.isFull()) return false;
   this.arr[this.tail] = value;
   this.tail += 1;
-  if (this.tail === this.arr.length) this.tail = 0;
+  // if (this.tail === this.arr.length) this.tail = 0;
+  this.tail = this.tail % this.arr.length;
   this.cnt++;
   return true;
 };
@@ -203,7 +204,8 @@ MyCircularQueue.prototype.enQueue = function (value) {
 MyCircularQueue.prototype.deQueue = function () {
   if (this.isEmpty()) return false;
   this.head += 1;
-  if (this.head === this.arr.length) this.head = 0;
+  // if (this.head === this.arr.length) this.head = 0;
+  this.head = this.head % this.arr.length;
   this.cnt--;
   return true;
 };
@@ -248,4 +250,25 @@ MyCircularQueue.prototype.isFull = function () {
  * var param_5 = obj.isEmpty()
  * var param_6 = obj.isFull()
  */
+```
+
+### 2)循环双端队列
+
+#### 641. 设计循环双端队列
+
+设计实现双端队列。
+你的实现需要支持以下操作：
+
+- MyCircularDeque(k)：构造函数,双端队列的大小为 k。
+- insertFront()：将一个元素添加到双端队列头部。 如果操作成功返回 true。
+- insertLast()：将一个元素添加到双端队列尾部。如果操作成功返回 true。
+- deleteFront()：从双端队列头部删除一个元素。 如果操作成功返回 true。
+- deleteLast()：从双端队列尾部删除一个元素。如果操作成功返回 true。
+- getFront()：从双端队列头部获得一个元素。如果双端队列为空，返回 -1。
+- getRear()：获得双端队列的最后一个元素。  如果双端队列为空，返回 -1。
+- isEmpty()：检查双端队列是否为空。
+- isFull()：检查双端队列是否满了。
+
+```javascript
+
 ```
