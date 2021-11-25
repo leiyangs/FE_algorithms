@@ -401,3 +401,39 @@ RecentCounter.prototype.ping = function (t) {
   return this.myQueue.length;
 };
 ```
+
+### 4)亲密字符串
+
+#### 859. 亲密字符串
+
+- 给你两个字符串 s 和 goal ，只要我们可以通过交换 s 中的两个字母得到与 goal 相等的结果，就返回  true ；否则返回 false 。
+
+- 交换字母的定义是：取两个下标 i 和 j （下标从 0 开始）且满足 i != j ，接着交换 s[i] 和 s[j] 处的字符。
+
+- 例如，在 "abcd" 中交换下标 0 和下标 2 的元素可以生成 "cbad" 。
+
+**解题思路：**
+
+```javascript
+/**
+ * @param {string} s
+ * @param {string} goal
+ * @return {boolean}
+ */
+var buddyStrings = function (s, goal) {
+  // 如果两字符串长度不同
+  if (s.length !== goal.length) return false;
+  // 如果两字符串相同，但是交换位置后不相等返回false。但是如果有重复，交换位置后也相等，即判断有没有重复
+  if (s === goal) return s.length > new Set(s).size;
+  // 存放两个不同的字母
+  let arr = [];
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] !== goal[i]) {
+      arr.push(s[i], goal[i]);
+    }
+  }
+  console.log(arr);
+
+  return arr.length === 4 && arr[0] === arr[3] && arr[1] === arr[2];
+};
+```
