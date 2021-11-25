@@ -270,5 +270,134 @@ MyCircularQueue.prototype.isFull = function () {
 - isFull()：检查双端队列是否满了。
 
 ```javascript
+/**
+ * @param {number} k
+ */
+var MyCircularDeque = function (k) {
+  this.arr = new Array(k + 1);
+  this.front = 0;
+  this.tail = 0;
+  this.n = k + 1;
+  this.k = k;
+};
 
+/**
+ * @param {number} value
+ * @return {boolean}
+ */
+MyCircularDeque.prototype.insertFront = function (value) {
+  if (this.isFull("front")) return false;
+  this.front = (--this.front + this.n) % this.n;
+  this.arr[this.front] = value;
+  return true;
+};
+
+/**
+ * @param {number} value
+ * @return {boolean}
+ */
+MyCircularDeque.prototype.insertLast = function (value) {
+  if (this.isFull("last")) return false;
+  this.arr[this.tail] = value;
+  this.tail++;
+  this.tail = this.tail % this.n;
+  return true;
+};
+
+/**
+ * @return {boolean}
+ */
+MyCircularDeque.prototype.deleteFront = function () {
+  if (this.isEmpty()) return false;
+  this.front = ++this.front % this.n;
+  return true;
+};
+
+/**
+ * @return {boolean}
+ */
+MyCircularDeque.prototype.deleteLast = function () {
+  if (this.isEmpty()) return false;
+  this.tail = (--this.tail + this.n) % this.n;
+  return true;
+};
+
+/**
+ * @return {number}
+ */
+MyCircularDeque.prototype.getFront = function () {
+  if (this.isEmpty()) return -1;
+
+  return this.arr[this.front];
+};
+
+/**
+ * @return {number}
+ */
+MyCircularDeque.prototype.getRear = function () {
+  if (this.isEmpty()) return -1;
+  return this.arr[(this.tail - 1 + this.n) % this.n];
+};
+
+/**
+ * @return {boolean}
+ */
+MyCircularDeque.prototype.isEmpty = function () {
+  return this.front === this.tail;
+};
+
+/**
+ * @return {boolean}
+ */
+MyCircularDeque.prototype.isFull = function () {
+  // return (this.tail - this.front +this.n)%(this.n) === this.k
+  console.log(this.tail, this.front, this.n, this.k);
+  return (this.tail - this.front + this.n) % this.n == this.k;
+};
+
+/**
+ * Your MyCircularDeque object will be instantiated and called as such:
+ * var obj = new MyCircularDeque(k)
+ * var param_1 = obj.insertFront(value)
+ * var param_2 = obj.insertLast(value)
+ * var param_3 = obj.deleteFront()
+ * var param_4 = obj.deleteLast()
+ * var param_5 = obj.getFront()
+ * var param_6 = obj.getRear()
+ * var param_7 = obj.isEmpty()
+ * var param_8 = obj.isFull()
+ */
+```
+
+### 3)最近的请求次数
+
+#### 933. 最近的请求次数
+
+- 写一个 `RecentCounter` 类来计算特定时间范围内最近的请求。
+
+- 请你实现 `RecentCounter` 类：
+
+  - `RecentCounter()` 初始化计数器，请求数为 0 。
+
+  -`int ping(int t)` 在时间 t 添加一个新请求，其中 t 表示以毫秒为单位的某个时间，并返回过去 `3000` 毫秒内发生的所有请求数（包括新请求）。确切地说，返回在 `[t-3000, t]` 内发生的请求数。
+
+**解题思路：我们只会考虑最近 3000 毫秒到现在的 ping 数，因此我们可以使用队列存储这些 ping 的记录。当收到一个时间 t 的 ping 时，我们将它加入队列，并且将所有在时间 t - 3000 之前的 ping 移出队列。**
+
+```javascript
+var RecentCounter = function () {
+  this.myQueue = new Array();
+};
+
+/**
+ * @param {number} t
+ * @return {number}
+ */
+RecentCounter.prototype.ping = function (t) {
+  this.myQueue.push(t);
+  const time = t - 3000;
+  while (this.myQueue[0] < time) {
+    this.myQueue.shift();
+  }
+  return this.myQueue.length;
+};
 ```
