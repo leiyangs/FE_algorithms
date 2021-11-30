@@ -270,15 +270,22 @@ MyCircularQueue.prototype.isFull = function () {
 - isFull()：检查双端队列是否满了。
 
 ```javascript
+/*
+ * @lc app=leetcode.cn id=641 lang=javascript
+ *
+ * [641] 设计循环双端队列
+ */
+
+// @lc code=start
 /**
  * @param {number} k
  */
 var MyCircularDeque = function (k) {
-  this.arr = new Array(k + 1);
-  this.front = 0;
-  this.tail = 0;
-  this.n = k + 1;
+  this.myQueue = new Array(k);
+  this.head = 0;
+  this.tail = 1;
   this.k = k;
+  this.count = 0;
 };
 
 /**
@@ -286,9 +293,10 @@ var MyCircularDeque = function (k) {
  * @return {boolean}
  */
 MyCircularDeque.prototype.insertFront = function (value) {
-  if (this.isFull("front")) return false;
-  this.front = (--this.front + this.n) % this.n;
-  this.arr[this.front] = value;
+  if (this.isFull()) return false;
+  this.myQueue[this.head] = value;
+  this.head = (--this.head + this.k) % this.k;
+  this.count++;
   return true;
 };
 
@@ -297,10 +305,10 @@ MyCircularDeque.prototype.insertFront = function (value) {
  * @return {boolean}
  */
 MyCircularDeque.prototype.insertLast = function (value) {
-  if (this.isFull("last")) return false;
-  this.arr[this.tail] = value;
-  this.tail++;
-  this.tail = this.tail % this.n;
+  if (this.isFull()) return false;
+  this.myQueue[this.tail] = value;
+  this.tail = ++this.tail % this.k;
+  this.count++;
   return true;
 };
 
@@ -309,7 +317,8 @@ MyCircularDeque.prototype.insertLast = function (value) {
  */
 MyCircularDeque.prototype.deleteFront = function () {
   if (this.isEmpty()) return false;
-  this.front = ++this.front % this.n;
+  this.head = ++this.head % this.k;
+  this.count--;
   return true;
 };
 
@@ -318,7 +327,8 @@ MyCircularDeque.prototype.deleteFront = function () {
  */
 MyCircularDeque.prototype.deleteLast = function () {
   if (this.isEmpty()) return false;
-  this.tail = (--this.tail + this.n) % this.n;
+  this.tail = (--this.tail + this.k) % this.k;
+  this.count--;
   return true;
 };
 
@@ -327,8 +337,7 @@ MyCircularDeque.prototype.deleteLast = function () {
  */
 MyCircularDeque.prototype.getFront = function () {
   if (this.isEmpty()) return -1;
-
-  return this.arr[this.front];
+  return this.myQueue[(this.head + 1) % this.k];
 };
 
 /**
@@ -336,23 +345,21 @@ MyCircularDeque.prototype.getFront = function () {
  */
 MyCircularDeque.prototype.getRear = function () {
   if (this.isEmpty()) return -1;
-  return this.arr[(this.tail - 1 + this.n) % this.n];
+  return this.myQueue[(this.tail - 1 + this.k) % this.k];
 };
 
 /**
  * @return {boolean}
  */
 MyCircularDeque.prototype.isEmpty = function () {
-  return this.front === this.tail;
+  return this.count === 0;
 };
 
 /**
  * @return {boolean}
  */
 MyCircularDeque.prototype.isFull = function () {
-  // return (this.tail - this.front +this.n)%(this.n) === this.k
-  console.log(this.tail, this.front, this.n, this.k);
-  return (this.tail - this.front + this.n) % this.n == this.k;
+  return this.count === this.k;
 };
 
 /**
@@ -367,6 +374,7 @@ MyCircularDeque.prototype.isFull = function () {
  * var param_7 = obj.isEmpty()
  * var param_8 = obj.isFull()
  */
+// @lc code=end
 ```
 
 ### 3)最近的请求次数
@@ -435,5 +443,118 @@ var buddyStrings = function (s, goal) {
   console.log(arr);
 
   return arr.length === 4 && arr[0] === arr[3] && arr[1] === arr[2];
+};
+```
+
+### 拓展
+
+#### 860. 柠檬水找零
+
+```javascript
+/**
+ * @param {number[]} bills
+ * @return {boolean}
+ */
+var lemonadeChange = function (bills) {
+  let moneys = {
+    5: 0,
+    10: 0,
+  };
+  for (let i = 0; i < bills.length; i++) {
+    switch (bills[i]) {
+      case 5:
+        moneys["5"]++;
+        break;
+      case 10:
+        console.log(moneys);
+        if (moneys[5] < 1) return false;
+        moneys["5"]--;
+        moneys["10"]++;
+        break;
+      case 20:
+        if (moneys["10"] >= 1) {
+          if (moneys["5"] < 1) return false;
+          moneys["5"]--;
+          moneys["10"]--;
+        } else {
+          if (moneys["5"] < 3) return false;
+          moneys["5"] -= 3;
+        }
+    }
+  }
+  return true;
+};
+```
+
+#### 86. 分隔链表
+
+```javascript
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} x
+ * @return {ListNode}
+ */
+var partition = function (head, x) {
+  if (!head) return head;
+  let smallHead = new ListNode(0);
+  let largeHead = new ListNode(0);
+  let small = smallHead,
+    large = largeHead;
+
+  let curr = head;
+  while (curr) {
+    if (curr.val < x) {
+      small.next = curr;
+      small = small.next;
+    } else {
+      large.next = curr;
+      large = large.next;
+    }
+    curr = curr.next;
+  }
+
+  small.next = largeHead.next;
+  large.next = null;
+
+  return smallHead.next;
+};
+```
+
+#### 969. 煎饼排序
+
+```javascript
+/**
+ * 思路：将最大元素翻转到最前面，再一起翻转到最后面
+ * 同样思路操作剩下的元素
+ */
+var reverse = function (arr, result) {
+  if (arr.length === 1) return;
+  let arr1 = []; // 去除数组最大的元素后的数组
+  //  arr.length就是最大的数字
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === arr.length) {
+      result.push(i + 1);
+      // 滤掉了最大元素
+      arr1 = arr
+        .slice(0, i)
+        .reverse()
+        .concat(arr.slice(i + 1));
+      break;
+    }
+  }
+  result.push(arr.length);
+  reverse(arr1.reverse(), result);
+};
+var pancakeSort = function (arr) {
+  var result = [];
+  reverse(arr, result);
+  return result;
 };
 ```
