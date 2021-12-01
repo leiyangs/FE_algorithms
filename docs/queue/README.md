@@ -446,9 +446,9 @@ var buddyStrings = function (s, goal) {
 };
 ```
 
-### 拓展
+## 7. 拓展
 
-#### 860. 柠檬水找零
+### 860. 柠檬水找零
 
 ```javascript
 /**
@@ -486,7 +486,7 @@ var lemonadeChange = function (bills) {
 };
 ```
 
-#### 86. 分隔链表
+### 86. 分隔链表
 
 ```javascript
 /**
@@ -527,7 +527,7 @@ var partition = function (head, x) {
 };
 ```
 
-#### 969. 煎饼排序
+### 969. 煎饼排序
 
 ```javascript
 /**
@@ -559,7 +559,7 @@ var pancakeSort = function (arr) {
 };
 ```
 
-#### 138. 复制带随机指针的链表
+### 138. 复制带随机指针的链表
 
 ```javascript
 /**
@@ -606,5 +606,109 @@ var copyRandomList = function (head) {
     curr = curr.next;
   }
   return ret.next;
+};
+```
+
+### 1670. 设计前中后队列
+
+```javascript
+var FrontMiddleBackQueue = function () {
+  this.leftQueue = new Array();
+  this.rightQueue = new Array(); // 奇数时右侧数组大1
+  this.count = 0;
+};
+
+/**
+ * @param {number} val
+ * @return {void}
+ */
+// 调节两个对列的元素
+FrontMiddleBackQueue.prototype.ava = function () {
+  // 右侧个数比左侧多，且多于1个
+  while (this.rightQueue.length - this.leftQueue.length > 1) {
+    this.leftQueue.push(this.rightQueue.shift());
+  }
+  // 左侧比右侧多
+  while (this.rightQueue.length - this.leftQueue.length < 0) {
+    this.rightQueue.unshift(this.leftQueue.pop());
+  }
+};
+FrontMiddleBackQueue.prototype.isEmpty = function () {
+  return this.count === 0;
+};
+
+FrontMiddleBackQueue.prototype.pushFront = function (val) {
+  this.leftQueue.unshift(val);
+  this.count++;
+  this.ava();
+  return null;
+};
+
+/**
+ * @param {number} val
+ * @return {void}
+ */
+FrontMiddleBackQueue.prototype.pushMiddle = function (val) {
+  this.leftQueue.push(val);
+  this.count++;
+  this.ava();
+  return null;
+};
+
+/**
+ * @param {number} val
+ * @return {void}
+ */
+FrontMiddleBackQueue.prototype.pushBack = function (val) {
+  this.rightQueue.push(val);
+  this.count++;
+  this.ava();
+  return null;
+};
+
+/**
+ * @return {number}
+ */
+FrontMiddleBackQueue.prototype.popFront = function () {
+  if (this.isEmpty()) return -1;
+  let value = "";
+  // 优先弹出左侧队列的元素
+  if (this.leftQueue.length) {
+    value = this.leftQueue.shift();
+  } else {
+    value = this.rightQueue.shift();
+  }
+  this.count--;
+  this.ava();
+  return value;
+};
+
+/**
+ * @return {number}
+ */
+FrontMiddleBackQueue.prototype.popMiddle = function () {
+  if (this.isEmpty()) return -1;
+  let value = "";
+  // 如果是偶数个，弹出中间偏左的元素
+  if (this.rightQueue.length === this.leftQueue.length) {
+    value = this.leftQueue.pop();
+  } else {
+    // 否则中间元素为右队列第一个
+    value = this.rightQueue.shift();
+  }
+  this.count--;
+  this.ava();
+  return value;
+};
+
+/**
+ * @return {number}
+ */
+FrontMiddleBackQueue.prototype.popBack = function () {
+  if (this.isEmpty()) return -1;
+  let value = this.rightQueue.pop();
+  this.count--;
+  this.ava();
+  return value;
 };
 ```
