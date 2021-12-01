@@ -28,12 +28,26 @@ module.exports = {
       {
         title: '链表',
         collapsable: true,
-        children: ["/linkedList/"]
+        children: [
+          { title: '什么是链表', path: "/LinkedList/" },
+          { title: '力扣', path: "/LinkedList/LeetCode/" }
+        ]
       },
       {
         title: '队列',
         collapsable: true,
-        children: ["/queue/"]
+        children: [
+          { title: '什么是队列', path: "/Queue/" },
+          { title: '力扣', path: "/Queue/LeetCode/" }
+        ]
+      },
+      {
+        title: '栈',
+        collapsable: true,
+        children: [
+          { title: '什么是栈', path: "/Stack/" },
+          { title: '力扣', path: "/Stack/LeetCode/" }
+        ]
       }
       // {
       //   title: 'Nginx',
