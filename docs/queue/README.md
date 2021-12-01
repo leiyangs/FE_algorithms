@@ -558,3 +558,53 @@ var pancakeSort = function (arr) {
   return result;
 };
 ```
+
+#### 138. 复制带随机指针的链表
+
+```javascript
+/**
+ * // Definition for a Node.
+ * function Node(val, next, random) {
+ *    this.val = val;
+ *    this.next = next;
+ *    this.random = random;
+ * };
+ */
+
+/**
+ * @param {Node} head
+ * @return {Node}
+ */
+var copyRandomList = function (head) {
+  if (!head) return head;
+  let ret = new Node(0, null, null); // 新链表虚拟头
+  let curr = head; // 旧链表指针
+  let nrewPre = ret; // 新链表，指向前一个节点
+
+  while (curr) {
+    let newCurr = new Node(curr.val, null, null); // 创建节点
+    nrewPre.next = newCurr;
+    curr.link = newCurr; // 新节点映射到老节点
+
+    // 新老节点往后走一步
+    nrewPre = nrewPre.next;
+    curr = curr.next;
+  }
+
+  // 更改新链表random
+  curr = head;
+  while (curr) {
+    if (curr.random) {
+      curr.link.random = curr.random.link; // 新联表的random指向老链表random 的link
+    }
+    curr = curr.next;
+  }
+
+  // 删除旧链表的link属性
+  while (curr) {
+    delete curr.link;
+    curr = curr.next;
+  }
+  return ret.next;
+};
+```
