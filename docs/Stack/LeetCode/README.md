@@ -115,3 +115,126 @@ var calPoints = function (ops) {
   return ret;
 };
 ```
+
+## 844. 比较含退格的字符串
+
+- 给定 s 和 t 两个字符串，当它们分别被输入到空白的文本编辑器后，请你判断二者是否相等。# 代表退格字符。
+
+- 如果相等，返回 true ；否则，返回 false 。
+
+- 注意：如果对空文本输入退格字符，文本继续为空。
+
+```javascript
+/**
+ * @param {string} s
+ * @param {string} t
+ * @return {boolean}
+ */
+var backspaceCompare = function (s, t) {
+  let stackA = new Array();
+  let stackB = new Array();
+  for (let i = 0; i < s.length; i++) {
+    switch (s[i]) {
+      case "#":
+        stackA.pop();
+        break;
+
+      default:
+        stackA.push(s[i]);
+        break;
+    }
+  }
+
+  for (let i = 0; i < t.length; i++) {
+    switch (t[i]) {
+      case "#":
+        stackB.pop();
+        break;
+
+      default:
+        stackB.push(t[i]);
+        break;
+    }
+  }
+
+  return stackA.toString() === stackB.toString();
+};
+```
+
+## 1249. 移除无效的括号
+
+- 给你一个由 '('、')' 和小写字母组成的字符串 s。
+
+- 你需要从字符串中删除最少数目的 '(' 或者 ')' （可以删除任意位置的括号)，使得剩下的「括号字符串」有效。
+
+- 请返回任意一个合法字符串。
+
+- 有效「括号字符串」应当符合以下 任意一条 要求：
+
+  - 空字符串或只包含小写字母的字符串
+  - 可以被写作 AB（A 连接 B）的字符串，其中 A 和 B 都是有效「括号字符串」
+  - 可以被写作 (A) 的字符串，其中 A 是一个有效的「括号字符串」
+
+```javascript
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var minRemoveToMakeValid = function (s) {
+  let cnt = 0;
+  let stack = [];
+  // 把s都入栈，如果cnt<0，则右括号多，就不入栈
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] === "(") cnt++;
+    if (s[i] === ")") cnt--;
+    if (cnt < 0) {
+      cnt++;
+      continue;
+    }
+    stack.push(s[i]);
+  }
+  // 如果cnt>0，则左边括号多，那就删除多余的
+  if (cnt === 0) return stack.join("");
+  for (let i = stack.length - 1; i >= 0 && cnt; i--) {
+    if (stack[i] === "(") {
+      stack.splice(i, 1);
+      cnt--;
+    }
+  }
+  return stack.join("");
+};
+```
+
+## 145. 二叉树的后序遍历
+
+给定一个二叉树，返回它的 后序 遍历。
+
+```javascript
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var postorderTraversal = function (root) {
+  if (!root) return [];
+  let ret = [];
+  getNode(root, ret);
+  return ret;
+};
+
+var getNode = function (root, arr) {
+  if (!root) return;
+  getNode(root.left, arr);
+  getNode(root.right, arr);
+  arr.push(root.val);
+};
+```
+
+## 227. 基本计算器 II
+
+- 给你一个字符串表达式 s ，请你实现一个基本计算器来计算并返回它的值。
+
+- 整数除法仅保留整数部分。
+
+```javascript
+
+```
