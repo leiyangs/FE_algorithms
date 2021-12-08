@@ -236,5 +236,76 @@ var getNode = function (root, arr) {
 - 整数除法仅保留整数部分。
 
 ```javascript
+/**
+ * @param {string} s
+ * @return {number}
+ * 思路： 遍历 s
+ *  1. 如果是数字，则拼接数字
+ *  2. 如果是运算符:
+ *    1. 如果是 + ，则压入栈中
+ *    2. 如果是其他运算符，则和上一个数字进行运算再压入栈中
+ *    3. 计算栈中的和值
+ */
+var calculate = function (s) {
+  let i = 0;
+  let str = "";
+  let stack = [];
+  let preOp = 0;
 
+  while ((str = s[i])) {
+    // 过滤空格
+    if (str === " ") {
+      i++;
+      continue;
+    }
+
+    // 拼接数字
+    let val = str;
+    if (str >= "0" && str <= "9") {
+      let j = i + 1;
+      while (s[j] >= "0" && s[j] <= "9") {
+        val += s[j];
+        i++;
+        j++;
+      }
+    }
+    console.log(val);
+
+    switch (val) {
+      case "+":
+        preOp = 0;
+        break;
+      case "-":
+        preOp = 1;
+        break;
+      case "*":
+        preOp = 2;
+        break;
+      case "/":
+        preOp = 3;
+        break;
+
+      default:
+        // 数字
+        if (preOp === 1) {
+          let temp = -val;
+          stack.push(temp);
+        } else if (preOp === 2) {
+          let temp = stack.pop() * val;
+          stack.push(temp);
+        } else if (preOp === 3) {
+          let temp = (stack.pop() / val) | 0;
+          stack.push(temp);
+        } else {
+          // 前面运算符是+
+          stack.push(val);
+        }
+        break;
+    }
+    i++;
+  }
+  console.log(stack);
+  let ret = stack.reduce((prev, next) => +prev + +next, 0);
+  return ret;
+};
 ```
