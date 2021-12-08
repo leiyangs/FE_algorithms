@@ -8,7 +8,7 @@
     <link rel="icon" href="https://vuejs.org/images/logo.png">
     <meta name="description" content="前端算法">
     
-    <link rel="preload" href="/FE_algorithms/assets/css/0.styles.75bd0095.css" as="style"><link rel="preload" href="/FE_algorithms/assets/js/app.48e0ace7.js" as="script"><link rel="preload" href="/FE_algorithms/assets/js/2.a240a805.js" as="script"><link rel="preload" href="/FE_algorithms/assets/js/14.7382c176.js" as="script"><link rel="prefetch" href="/FE_algorithms/assets/js/10.f536b621.js"><link rel="prefetch" href="/FE_algorithms/assets/js/11.42019957.js"><link rel="prefetch" href="/FE_algorithms/assets/js/12.1da783d7.js"><link rel="prefetch" href="/FE_algorithms/assets/js/13.4f8449b0.js"><link rel="prefetch" href="/FE_algorithms/assets/js/3.dc24e78d.js"><link rel="prefetch" href="/FE_algorithms/assets/js/4.647324bd.js"><link rel="prefetch" href="/FE_algorithms/assets/js/5.acb36c0d.js"><link rel="prefetch" href="/FE_algorithms/assets/js/6.66908cae.js"><link rel="prefetch" href="/FE_algorithms/assets/js/7.718cffe7.js"><link rel="prefetch" href="/FE_algorithms/assets/js/8.5ead350e.js"><link rel="prefetch" href="/FE_algorithms/assets/js/9.3769f398.js">
+    <link rel="preload" href="/FE_algorithms/assets/css/0.styles.75bd0095.css" as="style"><link rel="preload" href="/FE_algorithms/assets/js/app.664afb01.js" as="script"><link rel="preload" href="/FE_algorithms/assets/js/2.a240a805.js" as="script"><link rel="preload" href="/FE_algorithms/assets/js/14.cb6c6494.js" as="script"><link rel="prefetch" href="/FE_algorithms/assets/js/10.f536b621.js"><link rel="prefetch" href="/FE_algorithms/assets/js/11.3fa1a840.js"><link rel="prefetch" href="/FE_algorithms/assets/js/12.2b883ee1.js"><link rel="prefetch" href="/FE_algorithms/assets/js/13.dac3950e.js"><link rel="prefetch" href="/FE_algorithms/assets/js/3.8712f962.js"><link rel="prefetch" href="/FE_algorithms/assets/js/4.647324bd.js"><link rel="prefetch" href="/FE_algorithms/assets/js/5.acb36c0d.js"><link rel="prefetch" href="/FE_algorithms/assets/js/6.66908cae.js"><link rel="prefetch" href="/FE_algorithms/assets/js/7.ebd8b5cd.js"><link rel="prefetch" href="/FE_algorithms/assets/js/8.5ead350e.js"><link rel="prefetch" href="/FE_algorithms/assets/js/9.3769f398.js">
     <link rel="stylesheet" href="/FE_algorithms/assets/css/0.styles.75bd0095.css">
   </head>
   <body>
@@ -193,12 +193,83 @@
   <span class="token function">getNode</span><span class="token punctuation">(</span>root<span class="token punctuation">.</span>right<span class="token punctuation">,</span> arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
   arr<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>root<span class="token punctuation">.</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
-</code></pre></div><h2 id="_227-基本计算器-ii"><a href="#_227-基本计算器-ii" class="header-anchor">#</a> 227. 基本计算器 II</h2> <ul><li><p>给你一个字符串表达式 s ，请你实现一个基本计算器来计算并返回它的值。</p></li> <li><p>整数除法仅保留整数部分。</p></li></ul> <div class="language-javascript extra-class"><pre class="language-javascript"><code>
+</code></pre></div><h2 id="_227-基本计算器-ii"><a href="#_227-基本计算器-ii" class="header-anchor">#</a> 227. 基本计算器 II</h2> <ul><li><p>给你一个字符串表达式 s ，请你实现一个基本计算器来计算并返回它的值。</p></li> <li><p>整数除法仅保留整数部分。</p></li></ul> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token comment">/**
+ * @param {string} s
+ * @return {number}
+ * 思路： 遍历 s
+ *  1. 如果是数字，则拼接数字
+ *  2. 如果是运算符:
+ *    1. 如果是 + ，则压入栈中
+ *    2. 如果是其他运算符，则和上一个数字进行运算再压入栈中
+ *    3. 计算栈中的和值
+ */</span>
+<span class="token keyword">var</span> <span class="token function-variable function">calculate</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">s</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token keyword">let</span> str <span class="token operator">=</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">;</span>
+  <span class="token keyword">let</span> stack <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token keyword">let</span> preOp <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>str <span class="token operator">=</span> s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 过滤空格</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>str <span class="token operator">===</span> <span class="token string">&quot; &quot;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      i<span class="token operator">++</span><span class="token punctuation">;</span>
+      <span class="token keyword">continue</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 拼接数字</span>
+    <span class="token keyword">let</span> val <span class="token operator">=</span> str<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>str <span class="token operator">&gt;=</span> <span class="token string">&quot;0&quot;</span> <span class="token operator">&amp;&amp;</span> str <span class="token operator">&lt;=</span> <span class="token string">&quot;9&quot;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">let</span> j <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+      <span class="token keyword">while</span> <span class="token punctuation">(</span>s<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">&gt;=</span> <span class="token string">&quot;0&quot;</span> <span class="token operator">&amp;&amp;</span> s<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">&lt;=</span> <span class="token string">&quot;9&quot;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        val <span class="token operator">+=</span> s<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        i<span class="token operator">++</span><span class="token punctuation">;</span>
+        j<span class="token operator">++</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">switch</span> <span class="token punctuation">(</span>val<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">case</span> <span class="token string">&quot;+&quot;</span><span class="token operator">:</span>
+        preOp <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+      <span class="token keyword">case</span> <span class="token string">&quot;-&quot;</span><span class="token operator">:</span>
+        preOp <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+      <span class="token keyword">case</span> <span class="token string">&quot;*&quot;</span><span class="token operator">:</span>
+        preOp <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+      <span class="token keyword">case</span> <span class="token string">&quot;/&quot;</span><span class="token operator">:</span>
+        preOp <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+
+      <span class="token keyword">default</span><span class="token operator">:</span>
+        <span class="token comment">// 数字</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>preOp <span class="token operator">===</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token keyword">let</span> temp <span class="token operator">=</span> <span class="token operator">-</span>val<span class="token punctuation">;</span>
+          stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>temp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>preOp <span class="token operator">===</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token keyword">let</span> temp <span class="token operator">=</span> stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> val<span class="token punctuation">;</span>
+          stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>temp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>preOp <span class="token operator">===</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token keyword">let</span> temp <span class="token operator">=</span> <span class="token punctuation">(</span>stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">/</span> val<span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token number">0</span><span class="token punctuation">;</span>
+          stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>temp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+          <span class="token comment">// 前面运算符是+</span>
+          stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    i<span class="token operator">++</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>stack<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">let</span> ret <span class="token operator">=</span> stack<span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">prev<span class="token punctuation">,</span> next</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token operator">+</span>prev <span class="token operator">+</span> <span class="token operator">+</span>next<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
 </code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
       ←
       <a href="/FE_algorithms/Stack/" class="prev router-link-active">
         什么是栈
       </a></span> <!----></p></div> </main></div><div class="global-ui"></div></div>
-    <script src="/FE_algorithms/assets/js/app.48e0ace7.js" defer></script><script src="/FE_algorithms/assets/js/2.a240a805.js" defer></script><script src="/FE_algorithms/assets/js/14.7382c176.js" defer></script>
+    <script src="/FE_algorithms/assets/js/app.664afb01.js" defer></script><script src="/FE_algorithms/assets/js/2.a240a805.js" defer></script><script src="/FE_algorithms/assets/js/14.cb6c6494.js" defer></script>
   </body>
 </html>
