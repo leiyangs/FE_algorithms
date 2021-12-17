@@ -48,6 +48,14 @@ module.exports = {
           { title: '什么是栈', path: "/Stack/" },
           { title: '力扣', path: "/Stack/LeetCode/" }
         ]
+      },
+      {
+        title: '二叉树',
+        collapsable: true,
+        children: [
+          { title: '什么是二叉树', path: "/BinaryTree/" },
+          { title: '力扣', path: "/BinaryTree/LeetCode/" }
+        ]
       }
       // {
       //   title: 'Nginx',

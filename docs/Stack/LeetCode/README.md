@@ -309,3 +309,31 @@ var calculate = function (s) {
   return ret;
 };
 ```
+
+## 1021. 删除最外层的括号
+
+```javascript
+/**
+ * @param {string} s
+ * @return {string}
+ */
+/**
+ * 解题思路
+  有效括号：
+  遇到左括号，当前计数值大于 0 ，则属于有效的左括号。 遇到(cnt++
+  遇到右括号，当前计数值大于 1 ，则属于有效的右括号。 遇到)cnt--
+  */
+var removeOuterParentheses = function (s) {
+  let cnt = 0,
+    ret = "";
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] === "(" && cnt++ > 0) {
+      ret += s[i];
+    }
+    if (s[i] === ")" && cnt-- > 1) {
+      ret += s[i];
+    }
+  }
+  return ret;
+};
+```
