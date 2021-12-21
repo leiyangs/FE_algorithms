@@ -150,6 +150,8 @@ n0 = n2 + 1
 
 - 左孩子右兄弟 - 节省空间
 
+  - 三叉树转二叉树，按找左孩子右兄弟的方式
+
   ​ 假设有 n 个节点, 浪费的边数：
 
   ​ 有效的边数：n - 1 个（根节点不需要边指向）
@@ -163,8 +165,22 @@ n0 = n2 + 1
   ​ 得出，叉越多，浪费的指针域越多。
 
 - 练习递归的最佳选择
+  - 数学归纳法
+  - 赋予一个明确的含义
+  - 思考边界条件
+  - 实现递归
 
-  ​ 递归流程：
+```javascript
+// 斐波那契数列，前两个数固定，后面的值是前两位的和
+// 1,2,3,5,8,13,21
+function fib(n) {
+  if (n <= 2) return n;
+  return fib(n - 1) + fib(n - 2);
+}
+
+let ret = fib(5);
+console.log(ret);
+```
 
 ## 8. 算法题
 
@@ -173,11 +189,54 @@ n0 = n2 + 1
 给你二叉树的根节点 root ，返回它节点值的 前序 遍历。
 
 ```javascript
+var preorderTraversal = function (root) {
+  let arr = new Array();
+  getNode(root, arr);
+  return arr;
+};
 
+var getNode = function (root, arr) {
+  if (!root) return null;
+
+  arr.push(root.val);
+  root.left = getNode(root.left, arr);
+  root.right = getNode(root.right, arr);
+  return arr;
+};
 ```
 
 - 105.从前序与中序遍历序列构造⼆叉树
 
 ```javascript
+var buildTree = function (preorder, inorder) {
+  return buildNode(preorder, inorder);
+};
 
+var buildNode = function (preorder, inorder) {
+  if (!preorder.length) return null;
+
+  // 构建根节点
+  let root = new TreeNode(preorder[0]); // 前序遍历第一个是根
+
+  // 找到根节点在中序遍历中的位置
+  let p = 0;
+  while (root.val !== inorder[p]) {
+    p++;
+  }
+
+  // 中序遍历左子树
+  let inorderLeft = inorder.slice(0, p);
+  // 中序遍历右子树
+  let inorderRight = inorder.slice(p + 1);
+
+  // 前序遍历左子树
+  let preorderLeft = preorder.slice(1, p + 1);
+  // 前序遍历右子树
+  let preorderRight = preorder.slice(p + 1);
+
+  root.left = buildNode(preorderLeft, inorderLeft);
+  root.right = buildNode(preorderRight, inorderRight);
+
+  return root;
+};
 ```
