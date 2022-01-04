@@ -56,6 +56,14 @@ module.exports = {
           { title: '什么是二叉树', path: "/BinaryTree/" },
           { title: '力扣', path: "/BinaryTree/LeetCode/" }
         ]
+      },
+      {
+        title: '堆',
+        collapsable: true,
+        children: [
+          { title: '什么是堆', path: "/Heap/" },
+          { title: '力扣', path: "/Heap/LeetCode/" }
+        ]
       }
       // {
       //   title: 'Nginx',
