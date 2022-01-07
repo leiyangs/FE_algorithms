@@ -47,6 +47,7 @@
 ## 3. 堆和优先队列
 
 - 堆是优先队列的一种实现方式
+- 堆符合优先队列的性质
 
 ## 4. 应用场景
 
@@ -81,7 +82,7 @@ class Heap {
   poll() {
     if (!this.size()) return null;
     const res = this.data[0];
-    this.data[0] = this.data.pop();
+    this.size() > 1 ? (this.data[0] = this.data.pop()) : this.data.pop();
     if (this.size()) {
       this.bubbleDown(0); // 在头部弹出
     }
@@ -157,7 +158,7 @@ class Heap {
   poll() {
     if (!this.size()) return null;
     const res = this.data[0];
-    this.data[0] = this.data.pop();
+    this.size() > 1 ? (this.data[0] = this.data.pop()) : this.data.pop();
     if (this.size()) {
       this.bubbleDown(0);
     }
