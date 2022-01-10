@@ -346,7 +346,118 @@ class MinHeap {
 解：
 
 ```javascript
+// 解法1 利用小根堆
+var kSmallestPairs = function (nums1, nums2, k) {
+  let heap = new MinHeap([], (lower, higher) => lower.val > higher.val);
 
+  for (let i = 0; i < nums1.length; i++) {
+    for (let j = 0; j < nums2.length; j++) {
+      if (heap.data.length == k && nums1[i] + nums2[j] > heap.data[0].val) {
+        break;
+      }
+      heap.offer({
+        val: nums1[i] + nums2[j],
+        item: [nums1[i], nums2[j]],
+      });
+
+      if (heap.data.length > k) {
+        heap.poll();
+      }
+    }
+  }
+  let ret = [];
+  console.log("heap=>", heap.data);
+  while (heap.data.length) {
+    let item = heap.poll().item;
+    console.log(item);
+    ret.push(item);
+  }
+  console.log("ret=>", ret);
+  return ret.reverse();
+};
+
+class MinHeap {
+  constructor(data = [], compare) {
+    this.data = data;
+    this.compare = compare;
+    this.heapity();
+  }
+  heapity() {
+    if (this.size() < 2) return;
+    for (let i = 0; i < this.data.length; i++) {
+      this.bubbleUp(i);
+    }
+  }
+  size() {
+    return this.data.length;
+  }
+  peek() {
+    if (!this.size()) return null;
+    return this.data[0];
+  }
+  swap(i, j) {
+    [this.data[i], this.data[j]] = [this.data[j], this.data[i]];
+  }
+  offer(val) {
+    this.data.push(val);
+    this.bubbleUp(this.size() - 1);
+  }
+  poll() {
+    if (!this.size()) return null;
+    const res = this.data[0];
+    this.size() > 1 ? (this.data[0] = this.data.pop()) : this.data.pop();
+    if (this.size()) {
+      this.bubbleDown(0);
+    }
+    return res;
+  }
+  bubbleUp(index) {
+    while (index > 0) {
+      const parentIndex = Math.floor((index - 1) / 2);
+      if (this.compare(this.data[parentIndex], this.data[index])) break;
+      this.swap(index, parentIndex);
+      index = parentIndex;
+    }
+  }
+  bubbleDown(index) {
+    const lastIndex = this.size() - 1;
+    while (index < lastIndex) {
+      let leftIndex = index * 2 + 1;
+      let rightIndex = index * 2 + 2;
+      let findIndex = index;
+
+      if (
+        leftIndex < this.size() &&
+        this.compare(this.data[leftIndex], this.data[findIndex])
+      ) {
+        findIndex = leftIndex;
+      }
+      if (
+        rightIndex < this.size() &&
+        this.compare(this.data[rightIndex], this.data[findIndex])
+      ) {
+        findIndex = rightIndex;
+      }
+      if (index === findIndex) break;
+      this.swap(index, findIndex);
+      index = findIndex;
+    }
+  }
+}
+
+// 解法2冒泡
+var kSmallestPairs = function (nums1, nums2, k) {
+  let array = [];
+  for (let i = 0; i < nums1.length; i++) {
+    for (let j = 0; j < nums2.length; j++) {
+      array.push([nums1[i], nums2[j]]);
+    }
+  }
+  array.sort((a, b) => {
+    return a[0] + a[1] - (b[0] + b[1]);
+  });
+  return array.slice(0, k);
+};
 ```
 
 ## 215. 数组中的第 K 个最大元素
@@ -426,10 +537,13 @@ class MinHeap {
       let leftIndex = index * 2 + 1;
       let rightIndex = index * 2 + 2;
       let findIndex = index;
-      if (this.data[findIndex] > this.data[leftIndex]) {
+      if (
+        leftIndex < this.size() &&
+        this.data[findIndex] > this.data[leftIndex]
+      ) {
         findIndex = leftIndex;
       }
-      if (this.data[findIndex] > this.data[rightIndex]) {
+      if (right < this.size() && this.data[findIndex] > this.data[rightIndex]) {
         findIndex = rightIndex;
       }
       if (index === findIndex) break;
