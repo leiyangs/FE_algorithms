@@ -64,6 +64,14 @@ module.exports = {
           { title: '什么是堆', path: "/Heap/" },
           { title: '力扣', path: "/Heap/LeetCode/" }
         ]
+      },
+      {
+        title: '并查集',
+        collapsable: true,
+        children: [
+          { title: '什么并查集', path: "/UnionFind/" },
+          { title: '力扣', path: "/UnionFind/LeetCode/" }
+        ]
       }
       // {
       //   title: 'Nginx',
