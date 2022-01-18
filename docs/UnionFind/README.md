@@ -99,9 +99,11 @@ class UnionSet {
     if (this.father[x] === x) return x;
     return this.find(this.father[x]);
   }
+  // 查找是不是同一个集合，即同一个父亲
   query(a, b) {
     return this.find(a) === this.find(b);
   }
+  // 合并树
   merge(a, b) {
     const fatherA = this.father[a];
     const fatherB = this.father[b];
@@ -109,4 +111,135 @@ class UnionSet {
     this.father[fatherA] = fatherB; // a的父节点变为b的父节点
   }
 }
+```
+
+- 3. weighted-quick-union
+
+  - 优化 quick-union 的 find 方法，节点少的合并到节点多的树上
+
+```javascript
+class UnionSet {
+  constructor(n = 100) {
+    this.n = n;
+    this.father = new Array(n);
+    this.size = new Array(n); // 存放当前集合的元素数量
+    this.init();
+  }
+  init() {
+    for (let i = 0; i < this.n; i++) {
+      this.father[i] = i;
+      this.size[i] = 1;
+    }
+  }
+
+  find(x) {
+    if (this.father[x] === x) return x;
+    return this.find(this.father[x]);
+  }
+
+  query(a, b) {
+    return this.find(a) === this.find(b);
+  }
+  // 加入了判断优化
+  merge(a, b) {
+    const fatherA = this.find(a);
+    const fatherB = this.find(b);
+    if (fatherA === fatherB) return;
+    // 如果树a高度小于树b，那么a合并到b。b的高度大小加上a的大小
+    if (this.size[a] < this.size[b]) {
+      this.father[fatherA] = fatherB;
+      this.size[fatherB] += this.father[fatherA];
+    } else {
+      this.father[fatherB] = fatherA;
+      this.size[fatherA] += this.father[fatherB];
+    }
+  }
+}
+```
+
+- 4. 带路径压缩的 weighted-quick-union
+
+```javascript
+class UnionSet {
+  constructor(n = 100) {
+    this.n = n;
+    this.father = new Array(n);
+    this.size = new Array(n); // 存放当前集合的元素数量
+    this.init();
+  }
+  init() {
+    for (let i = 0; i < this.n; i++) {
+      this.father[i] = i;
+      this.size[i] = 1;
+    }
+  }
+
+  find(x) {
+    if (this.father[x] === x) return x;
+    const root = this.find(this.father[x]);
+    // 将x直接挂到根节点上
+    this.father[x] = root;
+    return root;
+  }
+
+  query(a, b) {
+    return this.find(a) === this.find(b);
+  }
+  // 加入了判断优化
+  merge(a, b) {
+    const fatherA = this.find(a);
+    const fatherB = this.find(b);
+    if (fatherA === fatherB) return;
+    // 如果树a数量小于树b，那么a合并到b。b的大小加上a的大小
+    if (this.size[a] < this.size[b]) {
+      this.father[fatherA] = fatherB;
+      this.size[fatherB] += this.father[fatherA];
+    } else {
+      this.father[fatherB] = fatherA;
+      this.size[fatherA] += this.father[fatherB];
+    }
+  }
+}
+```
+
+- 5. 只有路径查询的
+
+```javascript
+class UnionSet {
+  constructor(n = 100) {
+    this.n = n;
+    this.father = new Array(n);
+    this.init();
+  }
+  init() {
+    for (let i = 0; i < this.n; i++) {
+      this.father[i] = i;
+    }
+  }
+
+  find(x) {
+    return (this.father[x] =
+      this.father[x] === x ? x : this.find(this.father[x]));
+  }
+
+  query(a, b) {
+    return this.find(a) === this.find(b);
+  }
+
+  merge(a, b) {
+    this.father[this.find(a)] = this.father[b];
+  }
+}
+
+function test() {
+  const unionSet = new UnionSet(100);
+  unionSet.merge(3, 1);
+  unionSet.merge(1, 4);
+  console.log(`1属于集合 ${unionSet.find(1)}`);
+  console.log(`4属于集合 ${unionSet.find(4)}`);
+  console.log(`6属于集合 ${unionSet.find(6)}`);
+  console.log(`3、4属于一个集合 ${unionSet.query(3, 4)}`);
+  console.log(`3、6属于一个集合 ${unionSet.query(3, 6)}`);
+}
+test();
 ```
