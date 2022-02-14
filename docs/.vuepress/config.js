@@ -1,9 +1,9 @@
 module.exports = {
   lang: 'zh-CN',
   title: '前端算法',
-  description: '前端算法',
+  description: '算法（Algorithm）是指用来操作数据、解决程序问题的一组方法。对于同一个问题，使用不同的算法，也许最终得到的结果是一样的，但在过程中消耗的资源和时间却会有很大的区别。',
   head: [ // 注入到当前页面的 HTML <head> 中的标签
-    ['link', { rel: 'icon', href: 'https://vuejs.org/images/logo.png' }], // 增加一个自定义的 favicon(网页标签的图标)
+    ['link', { rel: 'icon', href: '/images/logo.png' }], // 增加一个自定义的 favicon(网页标签的图标)
   ],
   dest: './docs/.vuepress/dist',
   evergreen: true,
@@ -13,7 +13,7 @@ module.exports = {
     lineNumbers: false, // 代码块显示行号
   },
   themeConfig: {
-    logo: 'https://vuejs.org/images/logo.png',
+    logo: '/images/logo.png',
     nav: [ // 导航栏配置
       { text: 'Home', link: '/' },
       { text: 'Guide', link: '/guide/' },
@@ -72,13 +72,15 @@ module.exports = {
           { title: '什么并查集', path: "/UnionFind/" },
           { title: '力扣', path: "/UnionFind/LeetCode/" }
         ]
+      },
+      {
+        title: '快速排序',
+        collapsable: true,
+        children: [
+          { title: '什么排序', path: "/QuickSort/" },
+          { title: '力扣', path: "/QuickSort/LeetCode/" }
+        ]
       }
-      // {
-      //   title: 'Nginx',
-      //   children: [
-          // { title: "一、linux概念", path: "/linkedList/" },
-        // ]
-      // },
     ]
   }
 }
