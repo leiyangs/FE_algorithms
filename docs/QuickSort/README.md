@@ -208,12 +208,135 @@ function merge(left, right) {
 
 - 递归地（recursive）把小于基准值元素的子数列和大于基准值元素的子数列排序。
 
+#### 优化
+
+STL： 世界上最快的排序。
+
+STL中的sort并非只是普通的快速排序，除了对普通的快速排序进行优化，它还结合了插入排序和堆排序。 根据不同的数量级别以及不同情况，能自动选用合适的排序方法。
+
+  1. 当数据量较大时采用快速排序，分段递归。
+
+  2. 一旦分段后的数据量小于某个阀值，为避免递归调用带来过大的额外负荷，便会改用插入排序。
+
+  3. 而如果递归层次过深，有出现最坏情况的倾向，还会改用堆排序。
+
+  4. 单边递归法实现
+
+  5. 基准值的选择 针对比较比较有序的序列，容易退化为 n^2 的冒泡排序。 1，2，3，4，5，6，7，2，9 三点取中法
+
+  6. threshold 分段较小时，用插入排序。
+
+  7. 减少特判  将最小值放到左边，避免插入排序时越界。
+
 ![快速排序](../assets/images/quickSort.gif)
 
 ```javascript
-function quickSort(arr, left, right) {
+let arr = [5,3,2,4,8,7,9,1,24,14,12]
 
+// left 左边界  right 有边界
+function quickSort1(arr, left, right) {
+  if(left >= right) return // 指针最终相等，停止递归
+
+  let x = left, y = right // x 左指针  y右指针
+  let base = arr[left] // 基准
+
+  
+  while(x < y) {
+    // 右指针往左走
+    while(x < y && arr[y] >=base) y--
+    if(x < y) arr[x++] = arr[y]
+
+    // 左指针往右走
+    while(x < y && arr[x] <=base) x++
+    if(x < y) arr[y--] = arr[x]
+  }
+
+  arr[x] = base
+
+  quickSort1(arr, left, x-1)
+  quickSort1(arr, x+1, right)
 }
+
+// 测试
+quickSort(arr, 0, arr.length-1)
+
+
+function quickSort2(arr, left, right) {
+  if(left >= right) return // 指针最终相等，停止递归
+  while(left < right) {
+    let x = left, y = right, base = arr[x]
+    while(x < y) {
+      // 右指针往左走
+      while(x < y && arr[y] >=base) y--
+      if(x < y) arr[x++] = arr[y]
+
+      // 左指针往右走
+      while(x < y && arr[x] <=base) x++
+      if(x < y) arr[y--] = arr[x]
+    }
+    arr[x] = base
+
+    quickSort2(arr, x+1, right)
+    right = x - 1
+  }
+}
+
+
+
+function median(a, b, c) {
+  if(a > b) [a, b] = [b, a];
+  if(a > c) [a, c] = [c, a];
+  if(b > c) [c, b] = [b, c];
+  return b;
+}
+// 三点取中法 15
+const threshold = 3; 
+const _quickSort3 = function (arr, l, r){
+  while( l - r > threshold) {
+    let x = l; y = r; base = median(arr[l], arr[(l + r) >> 1], arr[r]);
+    do {
+      while(arr[x] < base) x++;
+      while(arr[y] > base) y--;
+      if(x <= y) {
+        [arr[x], arr[y]] = [arr[y], arr[x]];
+        x++; y--;
+      }
+
+      quickSort3(arr, x , r);
+    } while(x <= y)
+  }
+}
+
+const quickSort3 = function(arr, l, r) {
+  _quickSort3(arr, l, r);
+
+  inbsert_sort(arr, l, r);
+}
+
+const inbsert_sort = function(arr, l, r) {
+  let ind = l; // 最小值
+
+  // 查找最小值， 放到最前面 //// 减少特判
+  for(let i = 1; i< r; i++) { // 查找最小值
+    if(arr[i] < arr[ind]) ind = i;
+  }
+  while(ind > l) { // 将最小值移动到最前面
+    [arr[ind], arr[ind - 1]] = [arr[ind - 1], arr[ind]]
+  }
+
+  for(let i = l + 2; i<=r; i++) {
+    let j = i; // i：当前要插入的元素   j: 与当前要插入的元素比较的元素
+    while(arr[i] < arr[j - 1]) {
+      [arr[i], arr[j - 1]] = [ arr[j-1], arr[i]];
+      j--;
+    }
+  }
+}
+
+quickSort3(arr, 0 , arr.length - 1);
+console.log(arr);
+
+
 ```
 
 ### 7. 堆排序
