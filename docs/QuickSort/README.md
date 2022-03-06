@@ -160,16 +160,23 @@ function shellSort(arr) {
 
 归并排序是建立在归并操作上的一种有效的排序算法。该算法是采用分治法（Divide and Conquer）的一个非常典型的应用。将已有序的子序列合并，得到完全有序的序列；即先使每个子序列有序，再使子序列段间有序。若将两个有序表合并成一个有序表，称为2-路归并。
 
-- 把长度为n的输入序列分成两个长度为n/2的子序列；
+- 首先将这个数组分成左右两部分，并让左右两部分有序
 
-- 对这两个子序列分别采用归并排序；
+  - 对这两个子序列分别采用归并排序；
+
+    - 继续把左边部分分成两部分，并使两部分有序
+
+    - 继续把右边部分分成两部分，并使两部分有序
+
+    - 把两部分合并成一个有序数组
 
 - 将两个排序好的子序列合并成一个最终的排序序列。
 
 ![归并排序](../assets/images/mergeSort.gif)
 
 ```javascript
-function mergeSort(arr) {
+// 二路合并
+function mergeSort1(arr) {
   let len = arr.length
   if(len < 2) return arr
   let middle = Math.floor(len / 2)
@@ -196,6 +203,11 @@ function merge(left, right) {
 
   return result;
 }
+
+function mergeSort2(arr, l, r) {
+
+}
+console.log(arr, 0, arr.length-1)
 ```
 
 ### 6. 快速排序（Quick Sort）
