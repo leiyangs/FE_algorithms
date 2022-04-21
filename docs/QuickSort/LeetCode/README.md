@@ -245,3 +245,57 @@ var quickSort = function(arr,l,r) {
 ```
 
 ## 归并排序
+
+### 剑指 Offer 51. 数组中的逆序对
+
+在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组，求出这个数组中的逆序对的总数。
+
+```javascript
+输入: [7,5,6,4]
+输出: 5
+```
+
+解：
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var reversePairs = function(nums) {
+    let ret = 0
+    function mergeSort(nums, l, r) {
+        if(l>=r) return
+        let middle = (l + r) >> 1
+        mergeSort(nums, l, middle)
+        mergeSort(nums, middle+1, r)
+        console.log(1)
+        let p1 = l,
+        p2 = middle + 1,
+        temp = [],
+        k = 0
+        while(p1 <= middle || p2 <= r) {
+            if((p2 > r) || (p1 <= middle && nums[p1] <= nums[p2])) {
+               temp[k] = nums[p1++]
+            }else {
+               temp[k] = nums[p2++]
+               // 如果右边比左边小，p2元素比左边p1元素后的元素都小（因为是有序的）
+               ret += middle - p1 + 1
+            }
+            k++
+        }
+
+        for(let i = l; i <= r; i++) {
+            nums[i] = temp[i-l]
+        }
+    }
+    mergeSort(nums, 0, nums.length - 1)
+    return ret
+};
+```
+
+### 23. 合并 K 个升序链表
+
+给你一个链表数组，每个链表都已经按升序排列。
+
+请你将所有链表合并到一个升序链表中，返回合并后的链表。

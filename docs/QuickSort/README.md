@@ -164,9 +164,9 @@ function shellSort(arr) {
 
   - 对这两个子序列分别采用归并排序；
 
-    - 继续把左边部分分成两部分，并使两部分有序
+    - 继续把左边部分，分成两部分，并使两部分有序
 
-    - 继续把右边部分分成两部分，并使两部分有序
+    - 继续把右边部分，分成两部分，并使两部分有序
 
     - 把两部分合并成一个有序数组
 
@@ -175,6 +175,8 @@ function shellSort(arr) {
 ![归并排序](../assets/images/mergeSort.gif)
 
 ```javascript
+const arr = [4,3,2,1,5,6,7,4,3,9,0]
+
 // 二路合并
 function mergeSort1(arr) {
   let len = arr.length
@@ -204,10 +206,40 @@ function merge(left, right) {
   return result;
 }
 
+// 方法二重点
 function mergeSort2(arr, l, r) {
+  if(l >= r) return // 如果只有一个递归元素，结束
+  let middle = (l + r) >> 1 // 位移运算符和/2结果一样
+  mergeSort2(arr, l, middle)
+  mergeSort2(arr, middle + 1, r)
 
+  // 分为左右两边，比较p1、p2元素大小，有序的放入临时空间数组
+  let p1 = l, // 左侧指针
+  p2 = middle + 1, // 右侧指针
+  temp = [], //临时空间
+  k = 0 // 额外空间最后位置
+
+  while(p1 <= middle || p2 <= r) { // 如果左/右侧还有元素
+  // 右侧没有元素p2>r 或者 p1元素<=p2元素
+    if((p2 > r) || (p1 <= middle && arr[p1] <= arr[p2])) {
+      temp[k] = arr[p1++] // 放入p1
+    }else {
+      temp[k] = arr[p2++] // 放入p2
+    }
+    k++;
+  }
+  console.log(temp)
+  // 将临时空间中的元素放回arr中
+  for(let i = l; i<=r; i++) {
+    arr[i] = temp[i - l]
+  }
+  console.log(arr)
 }
-console.log(arr, 0, arr.length-1)
+
+// 测试
+const arr = [4,3,2,1,5,6,7,4,3,9,0]
+mergeSort2(arr, 0, arr.length-1)
+console.log(arr)
 ```
 
 ### 6. 快速排序（Quick Sort）
@@ -252,7 +284,6 @@ function quickSort1(arr, left, right) {
   let x = left, y = right // x 左指针  y右指针
   let base = arr[left] // 基准
 
-  
   while(x < y) {
     // 右指针往左走
     while(x < y && arr[y] >=base) y--
@@ -272,7 +303,7 @@ function quickSort1(arr, left, right) {
 // 测试
 quickSort(arr, 0, arr.length-1)
 
-
+// [5,3,2,4,8,7,9,1,24,14,12]
 function quickSort2(arr, left, right) {
   if(left >= right) return // 指针最终相等，停止递归
   while(left < right) {
